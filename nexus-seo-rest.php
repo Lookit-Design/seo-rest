@@ -15,6 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function nexus_seo_rest_meta_auth( $allowed = false, $meta_key = '', $object_id = 0 ): bool {
+	unset( $allowed, $meta_key );
+	return current_user_can( 'edit_post', (int) $object_id );
+}
+
 add_action(
 	'init',
 	function () {
@@ -34,10 +39,7 @@ add_action(
 					'single'        => true,
 					'type'          => 'string',
 					'description'   => $label,
-					'auth_callback' => function ( $allowed, $meta_key, $object_id ) {
-						unset( $allowed, $meta_key );
-						return current_user_can( 'edit_post', $object_id );
-					},
+					'auth_callback' => 'nexus_seo_rest_meta_auth',
 				)
 			);
 		}
