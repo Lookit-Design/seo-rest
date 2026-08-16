@@ -4,7 +4,7 @@ Tags: rest api, seo, meta, n8n, watchdog
 Requires at least: 5.9
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,9 +14,12 @@ Exposes SEO meta fields for the watchdog post type over the WordPress REST API s
 
 This plugin registers the SEO meta fields used by the watchdog post type (focus keyphrase, meta description, and related keyphrases) with `show_in_rest` enabled, so they can be read and written through the standard WordPress REST API. This lets automation workflows (for example, n8n) set SEO values when creating or updating watchdog posts. It is designed to work with Yoast SEO.
 
-Write access requires the `edit_posts` capability, enforced by an authorization callback on each field. The plugin makes no external network requests of its own.
+Write access requires permission to edit the specific watchdog post, enforced by an authorization callback on each field. The plugin makes no external network requests of its own.
 
 == Changelog ==
+
+= 1.0.2 =
+* Require permission to edit the specific watchdog post before writing SEO meta over the REST API.
 
 = 1.0.1 =
 * Renamed the plugin and slug to remove a restricted trademarked term so it can be published.
