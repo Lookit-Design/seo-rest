@@ -12,27 +12,34 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
-add_action( 'init', function () {
+add_action(
+	'init',
+	function () {
 
-    $fields = [
-        '_yoast_wpseo_focuskw'       => 'Focus keyphrase',
-        '_yoast_wpseo_metadesc'      => 'Meta description',
-        '_yoast_wpseo_focuskeywords' => 'Related keyphrases (Yoast Premium)',
-    ];
+		$fields = array(
+			'_yoast_wpseo_focuskw'       => 'Focus keyphrase',
+			'_yoast_wpseo_metadesc'      => 'Meta description',
+			'_yoast_wpseo_focuskeywords' => 'Related keyphrases (Yoast Premium)',
+		);
 
-    foreach ( $fields as $key => $label ) {
-        register_post_meta( 'watchdog', $key, [
-            'show_in_rest'  => true,
-            'single'        => true,
-            'type'          => 'string',
-            'description'   => $label,
-            'auth_callback' => function () {
-                return current_user_can( 'edit_posts' );
-            },
-        ] );
-    }
-
-}, 20 ); // Priority 20 — runs after Yoast's own init hooks
+		foreach ( $fields as $key => $label ) {
+			register_post_meta(
+				'watchdog',
+				$key,
+				array(
+					'show_in_rest'  => true,
+					'single'        => true,
+					'type'          => 'string',
+					'description'   => $label,
+					'auth_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				)
+			);
+		}
+	},
+	20
+); // Priority 20 — runs after Yoast's own init hooks
