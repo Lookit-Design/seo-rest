@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Nexus – SEO REST Meta for Watchdog
  * Description: Registers SEO meta fields for the watchdog post type so they are writable via the WordPress REST API (used by n8n). Works with Yoast SEO.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Lookit Design
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+function nexus_seo_rest_meta_auth( $allowed = false, $meta_key = '', $object_id = 0 ): bool {
+	unset( $allowed, $meta_key );
+	return current_user_can( 'edit_post', (int) $object_id );
 }
 
 add_action(
@@ -34,9 +39,7 @@ add_action(
 					'single'        => true,
 					'type'          => 'string',
 					'description'   => $label,
-					'auth_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'auth_callback' => 'nexus_seo_rest_meta_auth',
 				)
 			);
 		}
